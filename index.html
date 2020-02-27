@@ -1,0 +1,128 @@
+<html>
+<head>
+	<title>Viewer3D</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<link rel='stylesheet' type='text/css' href='viewer.css'/>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/daa834e337.js" crossorigin="anonymous"></script>
+	<style>
+	
+	body {
+		padding: 0;
+		margin: 0;
+		font-family: 'Open Sans', 'Oswald', Arial;
+		user-select: none;
+		background: #f5f5f5;
+	}
+	
+	</style>
+</head>
+<body>
+	<div class='wrapper'>
+	    <div class='header'>
+	        <div class='header-left'> 
+	            <div class='header-item' id='toggleModelBrowser'>
+	                <div class='header-icon'><i class='fa fa-sitemap'></i></div>
+	                <div class='header-title'>Model Browser</div>
+	            </div>
+	            <input type='file' id='fileInput' style='display: none;' accept='.glb'>
+	            <label for='fileInput' class='header-item' id='browseModelBtn'>
+	                <div class='header-icon'><i class='fa fa-folder'></i></div>
+	                <div class='header-title'>Browse .GLB File</div>
+	            </label>
+	        </div>
+	        <div class='header-right'>
+	            <div class='header-item' id='downloadScreen'>
+	                <div class='header-icon'><i class='fa fa-camera'></i></div>
+	                <div class='header-title'>Screenshot</div>
+	            </div>
+	            <div class='header-item' id='toggleShare'>
+	                <div class='header-icon'><i class='fa fa-share-alt'></i></div>
+	                <div class='header-title'>Share</div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class='viewer-wrapper'>
+	        <div id='viewerCanvasWrapper'></div>
+	        <div class='slider-container' id='explodeSliderWrapper'  style='display: none;'>
+	            <div class='explode-content'>
+	                <input type='range' min='0' max='10' step='0.01' value='1' class='slider' id='explodeSlider'>
+	                <label class="cb-container">Explode Face (may cause lags!)
+	                    <input type="checkbox" id="explodeFace">
+	                    <span class="checkmark"></span>
+	                </label>
+	            </div>
+	        </div>
+	        <div class='left-sidebar' id='modelBrowser' style='display: none;'>
+	            <div class='sidebar-content' id='modelBrowserContent'>
+	                <div class='graph-item-wrapper'>
+	                    <div class='graph-item'>
+	                        <div class='graph-left'>
+	                            <div class='graph-folder'>
+	                                <i class='fa fa-folder'></i>
+	                            </div>
+	                            <div class='graph-name'>Test Scene</div>
+	                        </div>
+	                        <div class='graph-right'>
+	                            <div class='graph-visible'>
+	                                <i class='fa fa-eye'></i>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class='right-container'>
+	            <div id='backToHome'><i class='fa fa-home'></i></div>
+	            <div id='orientCubeWrapper'></div>
+	        </div>
+	        <div class='share-sidebar' id='shareSidebar' style='display: none;'>
+	            <h1 class='sidebar-title'>Some content here!</h1>
+	        </div>
+	        <div class='loader' id='loader'>
+	            <div class='loader-text' id='loaderInfo'>Loading...</div>
+	            <div class='loader-spinner'></div>
+	        </div>
+	    </div>
+	    <div class='footer'>
+	        <div class='footer-item' id='resetBtn'>
+	            <div class='footer-icon'><i class='fa fa-home'></i></div>
+	            <div class='footer-title'>Home</div>
+	        </div>
+	        <div class='footer-item' id='toggleMeasure'>
+	            <div class='footer-icon'><i class='	fas fa-ruler'></i></div>
+	            <div class='footer-title'>Measure</div>
+	        </div>
+	        <div class='footer-item item-selected' id='toggleOrbit'>
+	            <div class='footer-icon'><i class="fa fa-street-view"></i></div>
+	            <div class='footer-title'>Orbit</div>
+	        </div>
+	        <div class='footer-item' id='togglePan'>
+	            <div class='footer-icon'><i class='fa fa-arrows'></i></div>
+	            <div class='footer-title'>Pan</div>
+	        </div>
+	        <div class='footer-item' id='toggleZoom'>
+	            <div class='footer-icon'><i class='fa fa-search-plus'></i></div>
+	            <div class='footer-title'>Zoom</div>
+	        </div>
+	        <div class='footer-item' id='toggleExplode'>
+	            <div class='footer-icon'><i class='fa fa-cube'></i></div>
+	            <div class='footer-title'>Explode</div>
+	        </div>
+	    </div>
+	</div>
+
+	<script src='vendor/three.min.js'></script>
+	<script src='vendor/OrbitControls.js'></script>
+	<script src='vendor/GLTFLoader.js'></script>
+	<script src='viewer.js'></script>
+	<script>
+	
+	window.onload = () => {
+		let v = Viewer();
+		v.loadModel('models/pistol.glb');
+	}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+
+/*
+	Copyright Abhinav Singh Chauhan (@xclkvj)
+	Copying the contents of this file by any means is prohibited.
+*/
+
+#viewerCanvasWrapper, #viewerCanvasWrapper canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	outline: 0;
+}
+
+#orientCubeWrapper canvas {
+	outline: 0;
+}
+
+#modelBrowser {
+	z-index: 15;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	color: #666;
+	overflow: hidden;
+	-webkit-tap-highlight-color: transparent; 
+}
+
+.viewer-wrapper {
+	position: relative;
+	background: #eee;
+	flex: 1;
+}
+
+.viewer-loader {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 12;
+}
+
+.header, .footer {
+	display: flex;
+	padding: 0.55em;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-left: none;
+	border-right: none;
+	z-index: 10;
+}
+
+.header {
+	justify-content: space-between;
+}
+
+.footer {
+	justify-content: center;
+}
+
+.header-item, .footer-item {
+	display: flex;
+	border-radius: 1.55em;
+	padding: 0.45em 0.85em;
+	margin: 0 5px;
+	color: #666;
+	font-weight: medium;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.header-item:hover, .footer-item:hover {
+	box-shadow: 0 0.11em 0.11em #bbb;
+	color: #111;
+}
+
+.header-item:active, .footer-item:active, .item-selected, .item-selected:hover {
+	box-shadow: 0 0.11em 0.11em #ccc inset;
+	color: #03a9f4;
+}
+
+.header-item {
+	align-items: center;
+}
+
+.header-icon {
+	font-size: 1.25em;
+	padding: 0 0.4em;
+}
+
+.footer-item {
+	flex-direction: column;
+	align-items: center;
+	padding: 0.65em 1.55em; 
+}
+
+.footer-icon {
+	font-size: 2em;
+}
+
+.header-left, .header-right {
+	display: flex;
+}
+
+.slider-container {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	width: 100%;
+	text-align: center;
+}
+
+.slider {
+	appearance: none;
+	-webkit-appearance: none;
+	height: 10px;
+	border-radius: 4px;
+	outline: 0;
+	background: #d3d3d3;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+	-webkit-transition: 0.2s;
+	margin: 20px 0;
+	width: 100%;
+}
+
+.slider:hover {
+	opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	background: #03a9f4;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #03a9f4;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.share-sidebar {
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: #fff;
+	border-left: 1px solid #ccc;
+	height: 100%;
+	padding: 20px;
+}
+
+.sidebar-title {
+	font-weight: lighter;
+	text-align: center;
+}
+
+.loader {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #fff;
+	width: 100%;
+	height: 100%;
+	z-index: 20;
+}
+
+.loader-spinner {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -60px;
+	margin-top: -60px;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border: 10px solid #f3f3f3;
+	border-top: 10px solid #3498db;
+	animation: spin 2s linear infinite;
+}
+
+.loader-text {
+	position: absolute;
+	left: 50%;
+	bottom: 10px;
+	transform: translate(-50%, 0);
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+#explodeSlider {
+	width: 200px;
+}
+
+.right-container {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	display: flex;
+}
+
+.left-sidebar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background: #fff;
+	border-right: 1px solid #bbb;
+	min-width: 300px;
+	display: flex;
+	flex-direction: column;
+}
+
+.sidebar-header {
+	border-bottom: 1px solid #bbb;
+	padding: 15px 10px;
+	font-size: 1.25em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.sidebar-content {
+	height: 100%;
+	overflow-y: auto;
+}
+
+#backToHome {
+	color: #aaa;
+	opacity: 0.5;
+	cursor: pointer;
+	font-size: 1.5em;
+}
+
+#backToHome:hover {
+	opacity: 1;	
+}
+
+#orientCubeWrapper {
+	width: 130px;
+	height: 130px;
+	opacity: 0.7;
+	transition: opacity 0.3s;
+	-webkit-transition: 0.3s;
+}
+
+#orientCubeWrapper:hover {
+	opacity: 1;
+}
+
+.graph-item-wrapper {
+	padding: 0.5em 0.75em;
+}
+
+.graph-item-wrapper:hover {
+	background: rgba(0, 191, 255, 0.2) !important;
+}
+
+.graph-item-wrapper:nth-child(even) {
+	background: #f5f8fb;
+}
+
+.graph-item-wrapper:nth-child(odd) {
+	background: #fff;
+}
+
+.graph-item {
+	display: flex;
+	justify-content: space-between;
+}
+
+.graph-left, .graph-right {
+	display: flex;
+	align-items: center;
+}
+
+.graph-folder {
+	margin-right: 10px;
+}
+
+.graph-name {
+	overflow: hidden;
+}
+
+.graph-visible {
+	margin-left: 10px;
+}
+
+.graph-visible, .graph-folder, .graph-name {
+	cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+	#modelBrowser, .share-sidebar {
+		width: 100%;
+	}
+	
+	.footer-title {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.header-title {
+		display: none;
+	}
+	.footer {
+		justify-content: space-between;
+		overflow-x: scroll;
+	}
+}
+
+.explode-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.cb-container {
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	display: flex;
+	align-items: center;
+}
+
+.cb-container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+	margin: 10px;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+	background-color: #eee;
+}
+
+.cb-container:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+.cb-container input:checked ~ .checkmark {
+	background-color: #03a9f4;
+}
+
+.cb-checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.cb-container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+.cb-container .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
