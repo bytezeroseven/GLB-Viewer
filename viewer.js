@@ -5,6 +5,7 @@
 	Copying the contents of this file by any means is prohibited.
 */
 
+const ViewerBG = '#eee';
 const ViewerUI = {
 	canvasWrapper: document.getElementById('viewerCanvasWrapper'),
 	cubeWrapper: document.getElementById('orientCubeWrapper'),
@@ -68,6 +69,7 @@ function Viewer() {
 
 	ViewerUI.downloadScreen.onclick = function() {
 		const canvas = renderer.domElement;
+		renderAll();
 		const image = canvas.toDataURL("image/png");
 		const a = document.createElement("a");
 		a.href = image.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
@@ -88,7 +90,8 @@ function Viewer() {
 	let cubeCamera = new THREE.PerspectiveCamera(70, cubeWrapper.offsetWidth / cubeWrapper.offsetHeight, 0.1, 100);
 	let cubeRenderer = new THREE.WebGLRenderer({
 		alpha: true,
-		antialias: true
+		antialias: true,
+		preserveDrawingBuffer: true
 	});
 
 	cubeRenderer.setSize(cubeWrapper.offsetWidth, cubeWrapper.offsetHeight);
@@ -281,7 +284,6 @@ function Viewer() {
 			offsetX: x,
 			offsetY: y
 		});
-		console.log('t s')
 	}
 
 	ViewerUI.fileInput.addEventListener('input', function(evt) {
@@ -480,11 +482,12 @@ function Viewer() {
 	
 	let renderer = new THREE.WebGLRenderer({
 		antialias: true,
-		alpha: true
+		alpha: false
 	});
 	
+	renderer.setClearColor(new THREE.Color(ViewerBG));
+	renderer.autoClear = false;
 	renderer.setPixelRatio(window.deivicePixelRatio);
-	renderer.shadowMap.enabled = true;
 
 	let isInMeasureMode = false;
 	let lineScene = new THREE.Scene();
@@ -1002,6 +1005,23 @@ function Viewer() {
 	light1.intensity = light2.intensity = light3.intensity = light4.intensity = 0.3;
 	
 	let stop = false;
+
+	function renderAll() {
+
+		renderer.clear();
+		renderer.render(scene, camera);
+		updateCubeCamera();
+		cubeRenderer.render(cubeScene, cubeCamera);
+
+		renderer.clearDepth();
+
+		if (isInMeasureMode) {
+			renderer.clearDepth();
+			renderer.render(lineScene, camera);
+			renderer.clearDepth();
+			renderer.render(spriteScene, camera);
+		}
+	}
 	
 	function animate(time) {
 
@@ -1020,19 +1040,7 @@ function Viewer() {
 		
 		requestAnimationFrame(animate);
 		controller.update();
-		renderer.render(scene, camera);
-		updateCubeCamera();
-		cubeRenderer.render(cubeScene, cubeCamera);
-
-		renderer.autoClear = false;
-
-		if (isInMeasureMode) {
-			renderer.clearDepth();
-			renderer.render(lineScene, camera);
-
-			renderer.clearDepth();
-			renderer.render(spriteScene, camera);
-		}
+		renderAll();
 	}
 	
 	requestAnimationFrame(animate);
