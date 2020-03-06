@@ -610,6 +610,10 @@ function Viewer() {
 
 	renderer.domElement.onmousemove = function(evt) {
 		evt = evt || window.event;
+
+		if (!isInMeasureMode) {
+			return;
+		}
 		
 		let x = evt.offsetX;
 		let y = evt.offsetY;
@@ -805,6 +809,9 @@ function Viewer() {
 				camera.position.x += size / 2.0;
 				camera.position.y += size / 5.0;
 				camera.position.z += size / 2.0;
+
+				directionalLight.position.setScalar(size);
+
 				camera.lookAt(center);
 
 				controller.saveState();
@@ -985,8 +992,13 @@ function Viewer() {
 	let ambientLight = new THREE.AmbientLight();
 	ambientLight.intensity = 1;
 	scene.add(ambientLight);
+
+	let directionalLight = new THREE.DirectionalLight();
+	directionalLight.position.set(200, 200, 200)
+	directionalLight.intensity = 0.5;
+	scene.add(directionalLight);
 	
-	let light1 = new THREE.PointLight(0xffffff);
+	/*let light1 = new THREE.PointLight(0xffffff);
 	light1.position.set(100, 100, 100);
 	scene.add(light1);
 	
@@ -1002,7 +1014,7 @@ function Viewer() {
 	light4.position.set(-100, 100, -100);
 	scene.add(light4);
 	
-	light1.intensity = light2.intensity = light3.intensity = light4.intensity = 0.3;
+	light1.intensity = light2.intensity = light3.intensity = light4.intensity = 0.3;*/
 	
 	let stop = false;
 
